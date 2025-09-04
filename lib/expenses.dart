@@ -1,5 +1,5 @@
+import 'package:expensive_tracker/widgets/expensises_list/expenses_list.dart';
 import 'package:expensive_tracker/models/expense.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Expenses  extends StatefulWidget{
@@ -21,9 +21,9 @@ class _ExpensesState extends State<Expenses>{
         IconButton(onPressed: (){}, icon: const Icon(Icons.add))
       ],),
       body: Column(
-        children: const [
+        children:  [
           Text('The chart'),
-          Text('Expenses List...'),
+          Expanded(child: ExpensesList(expensises: registeredExpenses)),
         ],
       ),
     );
