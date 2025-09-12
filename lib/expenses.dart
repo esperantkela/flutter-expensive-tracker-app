@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
   @override
+  
   State<Expenses> createState() => _ExpensesState();
 }
 
@@ -30,6 +31,12 @@ class _ExpensesState extends State<Expenses> {
       context: context,
       builder: (ctx) => const NewExpense(),
     );
+  }
+
+  void _addExpense(Expense expense) {
+    setState(() {
+      registeredExpenses.add(expense);
+    });
   }
 
   @override

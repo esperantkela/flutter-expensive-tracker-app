@@ -65,6 +65,7 @@ class _NewExpenseState extends State<NewExpense> {
     Navigator.pop(context);
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Padding(
