@@ -1,19 +1,40 @@
+import 'package:expensive_tracker/models/expense.dart';
 import 'package:flutter/material.dart';
 
-class NewExpense  extends StatefulWidget {
+class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
 
   @override
-  State<NewExpense> createState() => _NewExpenseState();  
+  State<NewExpense> createState() => _NewExpenseState();
 }
 
 class _NewExpenseState extends State<NewExpense> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  DateTime? _selectedDate;
+  Category _selectedCategory = Category.leisure;
 
-var  _enteredTitle = '';
+  void _presentDatePicker() async {
+    final now = DateTime.now();
+    final pickeDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: now.subtract(const Duration(days: 365)),
+      lastDate: now,
+    );
 
-  void _saveTitleInput(String inputValue) {
-    _enteredTitle = inputValue;
+    setState(() {
+      _selectedDate = pickeDate;
+    });
   }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _amountController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,14 +42,63 @@ var  _enteredTitle = '';
       child: Column(
         children: [
           TextField(
-            onChanged: _saveTitleInput,
+            controller: _titleController,
             maxLength: 50,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(labelText: 'Title'),
           ),
-
           Row(
             children: [
+              Expanded(
+                child: TextField(
+                  controller: _amountController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Amount',
+                    prefixText: '\$ ',
+                  ),
+                ),
+              ),
+
+              SizedBox(width: 16),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      _selectedDate == null
+                          ? 'No Date Chosen'
+                          : formatter.format(_selectedDate!),
+                    ),
+                    IconButton(
+                      onPressed: _presentDatePicker,
+                      icon: Icon(Icons.calendar_month),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16,),
+          Row(
+            children: [
+              DropdownButton(
+              value: _selectedCategory,
+                items: Category.values
+                    .map(
+                      (category) => DropdownMenuItem(
+                        value: category,
+                        child: Text(category.name.toUpperCase()),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedCategory = value!;
+                  });
+                },
+              ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -37,16 +107,17 @@ var  _enteredTitle = '';
               ),
               ElevatedButton(
                 onPressed: () {
-                  print(_enteredTitle);
+                  print(
+                    'Title: ${_titleController.text}, Amount: ${_amountController.text}',
+                  );
                   Navigator.pop(context);
                 },
                 child: Text('Save Expense'),
               ),
             ],
           ),
-        ], 
+        ],
       ),
     );
   }
 }
-
