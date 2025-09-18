@@ -7,23 +7,51 @@ class ExpensesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      child: Card(
-        color: Colors.white,
+    return Card(
+      elevation: 4,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ), // Increased padding inside the card
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(expense.title),
-            SizedBox(height: 4),
+            Text(
+              expense.title,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontSize: 18, // Increased font size
+              ),
+            ),
+            const SizedBox(height: 12), // Increased spacing
             Row(
               children: [
-                Text('\$${expense.amount.toStringAsFixed(2)}'),
+                Text(
+                  '\$${expense.amount.toStringAsFixed(2)}',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 16,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSecondaryContainer,
+                      ),
+                ),
                 const Spacer(),
                 Row(
                   children: [
-                    Icon(categoryIcons[expense.category]),
-                    SizedBox(width: 6),
-                    Text(expense.getFormattedDate),
+                    Icon(
+                      categoryIcons[expense.category],
+                      size: 24, // Increased icon size
+                    ),
+                    const SizedBox(width: 8), // Increased spacing
+                    Text(
+                      expense.getFormattedDate,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 16,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSecondaryContainer,
+                      ),
+                    ),
                   ],
                 ),
               ],

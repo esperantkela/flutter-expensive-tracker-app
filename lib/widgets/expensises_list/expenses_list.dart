@@ -1,6 +1,6 @@
 import 'package:expensive_tracker/models/expense.dart';
 import 'package:expensive_tracker/widgets/expensises_list/expenses_item.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class ExpensesList extends StatelessWidget {
   const ExpensesList({super.key, required this.expensises, required this.onRemoveExpense});
@@ -14,6 +14,13 @@ class ExpensesList extends StatelessWidget {
       itemCount: expensises.length,
       itemBuilder: (ctx, index) {
         return Dismissible(
+          background: Container(
+            color: Theme.of(context).colorScheme.error,
+            margin: EdgeInsets.symmetric(
+              horizontal: Theme.of(context).cardTheme.margin!.horizontal,
+            ),
+            
+          ),
           key: ValueKey(expensises[index]),
           child: ExpensesItem(expensises[index]),
           onDismissed: (direction) {
