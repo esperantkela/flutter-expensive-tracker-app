@@ -1,3 +1,4 @@
+import 'package:expensive_tracker/widgets/chart/chart.dart';
 import 'package:expensive_tracker/widgets/expensises_list/expenses_list.dart';
 import 'package:expensive_tracker/models/expense.dart';
 import 'package:expensive_tracker/widgets/new_expense.dart';
@@ -80,7 +81,7 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Column(
         children: [
-          Text('The chart'),
+          Chart(expenses: registeredExpenses),
           Expanded(child: mainContent)
         ],
       ),
